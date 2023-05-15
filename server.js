@@ -3,7 +3,7 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 
 require('dotenv').config()
-
+// const DB_HOST = "mongodb+srv://Admin:OsviRDOrFMWR6xDo@cluster0.tgcvyzg.mongodb.net/db-contacts?retryWrites=true&w=majority";
 const app = express()
 
 // parse application/json
@@ -33,8 +33,8 @@ app.use((err, _, res, __) => {
   })
 })
 
-const PORT = process.env.PORT || 3000
-const uriDb = process.env.DB_HOST
+const PORT = process.env.PORT || 3000;
+const uriDb = process.env.DB_HOST;
 
 const connection = mongoose.connect(uriDb, {
   promiseLibrary: global.Promise,
