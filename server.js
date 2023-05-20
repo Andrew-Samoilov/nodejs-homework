@@ -3,12 +3,11 @@ const cors = require('cors')
 const mongoose = require('mongoose')
 
 require('dotenv').config()
-// const DB_HOST = "mongodb+srv://Admin:OsviRDOrFMWR6xDo@cluster0.tgcvyzg.mongodb.net/db-contacts?retryWrites=true&w=majority";
 const app = express()
 
 // parse application/json
 app.use(express.json())
-// cors
+
 app.use(cors())
 
 const routerApi = require('./routes/api')
@@ -18,7 +17,7 @@ app.use((_, res, __) => {
   res.status(404).json({
     status: 'error',
     code: 404,
-    message: 'Use api on routes: /api/tasks',
+    message: 'Use api on routes: /api/contacts',
     data: 'Not found',
   })
 })
@@ -37,11 +36,11 @@ const PORT = process.env.PORT || 3000;
 const uriDb = process.env.DB_HOST;
 
 const connection = mongoose.connect(uriDb, {
-  promiseLibrary: global.Promise,
+  // promiseLibrary: global.Promise,
   useNewUrlParser: true,
-  useCreateIndex: true,
+  // useCreateIndex: true,
   useUnifiedTopology: true,
-  useFindAndModify: false,
+  // useFindAndModify: false,
 })
 
 connection

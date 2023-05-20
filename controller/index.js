@@ -41,9 +41,9 @@ const getById = async (req, res, next) => {
 }
 
 const create = async (req, res, next) => {
-    const { title, text } = req.body
+    const { name, email, phone, favorite } = req.body
     try {
-        const result = await service.createContact({ title, text })
+        const result = await service.createContact({ name, email, phone, favorite })
 
         res.status(201).json({
             status: 'success',
@@ -58,9 +58,9 @@ const create = async (req, res, next) => {
 
 const update = async (req, res, next) => {
     const { id } = req.params
-    const { title, text } = req.body
+    const { name, email, phone, favorite } = req.body
     try {
-        const result = await service.updateContact(id, { title, text })
+        const result = await service.update(id, { name, email, phone, favorite })
         if (result) {
             res.json({
                 status: 'success',
@@ -81,26 +81,30 @@ const update = async (req, res, next) => {
     }
 }
 
-const updateStatus = async (req, res, next) => {
+const updateStatusContact = async (req, res, next) => {
     const { id } = req.params
-    const { isDone = false } = req.body
+    const { favorite = false } = req.body
+    const foo= req.body;
+    console.log(foo, favorite);
 
     try {
-        const result = await service.updateContact(id, { isDone })
-        if (result) {
-            res.json({
-                status: 'success',
-                code: 200,
-                data: { contact: result },
-            })
-        } else {
-            res.status(404).json({
-                status: 'error',
-                code: 404,
-                message: `Not found contact id: ${id}`,
-                data: 'Not Found',
-            })
-        }
+
+            const result = await service.update(id, { favorite })
+            if (result) {
+                res.json({
+                    status: 'success',
+                    code: 200,
+                    data: { contact: result },
+                })
+            } else {
+                res.status(400).json({
+                    status: 'error',
+                    code: 400,
+                    message: `missing field favorite`,
+                    data: 'Not Found',
+                })
+            }
+        
     } catch (e) {
         console.error(e)
         next(e)
@@ -137,6 +141,6 @@ module.exports = {
     getById,
     create,
     update,
-    updateStatus,
+    updateStatusContact,
     remove,
 }
