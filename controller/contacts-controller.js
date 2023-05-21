@@ -1,6 +1,6 @@
-const { HttpError, ctrlWrapper } = require('../helpers');
+const { ctrlWrapper } = require("../helpers");
+const { HttpError } = require("../helpers");
 const { Contact } = require('../models/contacts');
-
 
 const get = async (req, res) => {
     const result = await Contact.find({}, "name phone");
@@ -10,19 +10,17 @@ const get = async (req, res) => {
 
 const getById = async (req, res) => {
     const { id } = req.params;
-    const contact = await Contact.findById({ _id: id });
-    console.log(contact);
+    const result = await Contact.findById(id);
 
-    if (!contact) throw HttpError(404, "Not found");
-    
-    res.json(contact);
-
-    // if (contact) return res.status(201).json(contact);
-    // throw HttpError(404, 'not found');
+    if (!result) {
+        console.log(`!eRR!`)
+        throw HttpError(404, `Not found id: ${id}`);
+    }
+    res.json(result);
 }
 
 const create = async (req, res) => {
-    const contact = await Contact.create(req.body)
+    const contact = await Contact.create(req.body, { new: true })
     res.status(201).json(contact);
 }
 
