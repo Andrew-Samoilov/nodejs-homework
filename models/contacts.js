@@ -2,13 +2,6 @@ const { Schema, model } = require('mongoose');
 const { mongooseError } = require('../helpers');
 const Joi = require('joi');
 
-const addContactShema = Joi.object({
-  name: Joi.string().required(),
-  email: Joi.string().required(),
-  phone: Joi.string().required(),
-  favorite: Joi.boolean()
-});
-
 const updateFavoriteShema = Joi.object({ favorite: Joi.bool() });
 
 const contactSchema = new Schema({
@@ -28,10 +21,9 @@ const contactSchema = new Schema({
   },
 }, {
   versionKey: false,
-  // timestamps: true,
 });
 
 contactSchema.post("save", mongooseError);
-const schemas = { addContactShema, updateFavoriteShema };;
+const schemas = { updateFavoriteShema };;
 const Contact = model('Contact', contactSchema);
 module.exports = { Contact, schemas };

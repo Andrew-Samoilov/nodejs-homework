@@ -4,7 +4,6 @@ const { Contact } = require('../models/contacts');
 
 const get = async (req, res) => {
     const result = await Contact.find({}, "name phone");
-    // console.log(result);
     res.json(result);
 }
 
@@ -13,20 +12,19 @@ const getById = async (req, res) => {
     const result = await Contact.findById(id);
 
     if (!result) {
-        console.log(`!eRR!`)
         throw HttpError(404, `Not found id: ${id}`);
     }
     res.json(result);
 }
 
 const create = async (req, res) => {
-    const contact = await Contact.create(req.body, { new: true })
+    const contact = await Contact.create(req.body)
     res.status(201).json(contact);
 }
 
 const update = async (req, res, next) => {
     const { id } = req.params;
-    const body = req;
+    const body = req.body;
     const contact = await Contact.findByIdAndUpdate(id, body, { new: true });
     if (!contact) throw HttpError(404, 'not found');
     res.status(200).json(contact);
