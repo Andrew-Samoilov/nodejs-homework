@@ -26,12 +26,12 @@ const login = async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
     if (!user) {
-        throw HttpError(401);
+        throw HttpError(401,'Email or password is wrong');
     }
 
     const passwordCompare = await bcrypt.compare(password, user.password);
     if (!passwordCompare) {
-        throw HttpError(401);
+        throw HttpError(401,'Email or password is wrong');
     }
 
     const { _id: id, subscription } = user;
@@ -52,9 +52,19 @@ const login = async (req, res) => {
     })
 }
 
+const logout = async (req, res) => {
+    const { _id } = req.user;
+
+    await User.findByIdAndUpdate(_id, { token: "" });
+
+    res.json({
+        message: "Logout success"
+    })
+}
+
 module.exports = {
     register: ctrlWrapper(register),
     login: ctrlWrapper(login),
     // getCurrent: ctrlWrapper(getCurrent),
-    // logout: ctrlWrapper(logout),
+    logout: ctrlWrapper(logout),
 }
