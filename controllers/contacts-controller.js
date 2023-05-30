@@ -1,5 +1,4 @@
-const { ctrlWrapper } = require("../helpers");
-const { HttpError } = require("../helpers");
+const { ctrlWrapper, HttpError } = require("../helpers");
 const { Contact } = require('../models/contacts');
 
 const get = async (req, res) => {
