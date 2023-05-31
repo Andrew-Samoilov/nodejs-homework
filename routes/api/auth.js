@@ -13,7 +13,7 @@ router.post("/register", validateBody(schemas.userRegisterSchema), authControlle
 // signin
 router.post("/login", validateBody(schemas.userLoginSchema), authControllers.login);
 
-// router.get("/current", authenticate, authControllers.getCurrent);
+router.get("/current", authenticate, authControllers.getCurrent);
 
 router.post("/logout", authenticate, authControllers.logout);
 

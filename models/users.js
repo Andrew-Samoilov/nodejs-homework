@@ -3,6 +3,7 @@ const Joi = require('joi');
 
 const { mongooseError } = require('../helpers');
 
+// eslint-disable-next-line no-useless-escape
 const emailRegexp = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 const userSchema = new Schema({
@@ -21,7 +22,10 @@ const userSchema = new Schema({
         enum: ["starter", "pro", "business"],
         default: "starter"
     },
-    token: String
+    token: {
+        type: String,
+        default: ""
+    }
 }, { versionKey: false, timestamps: true });
 
 userSchema.post("save", mongooseError);
